@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Dashboard</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:linear-gradient(135deg,#74ebd5,#9face6);
+padding:40px;
+}
+
+.container{
+width:1000px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 15px 35px rgba(0,0,0,0.2);
+}
+
+h2{
+text-align:center;
+margin-bottom:25px;
+}
+
+.top-bar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.search-box input{
+padding:10px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+.search-box button{
+padding:10px 15px;
+background:#4CAF50;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.add-btn{
+padding:10px 18px;
+background:#2196F3;
+color:white;
+text-decoration:none;
+border-radius:6px;
+}
+
+.logout-btn{
+padding:10px 18px;
+background:#f44336;
+color:white;
+text-decoration:none;
+border-radius:6px;
+margin-left:10px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+table th, table td{
+padding:12px;
+border-bottom:1px solid #ddd;
+text-align:center;
+}
+
+table th{
+background:#4CAF50;
+color:white;
+}
+
+.Update-btn{
+padding:6px 12px;
+background:#FFC107;
+color:white;
+text-decoration:none;
+border-radius:5px;
+}
+
+.delete-btn{
+padding:6px 12px;
+background:#f44336;
+color:white;
+text-decoration:none;
+border-radius:5px;
+}
+
+.pagination{
+margin-top:25px;
+text-align:center;
+}
+
+.pagination a{
+padding:8px 12px;
+margin:4px;
+background:#eee;
+text-decoration:none;
+border-radius:5px;
+}
+
+.pagination span{
+padding:8px 12px;
+font-weight:bold;
+}
+
+.no-data{
+padding:20px;
+text-align:center;
+color:#888;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Student Management Dashboard</h2>
+
+<div class="top-bar">
+
+<form method="GET" class="search-box">
+
+<input type="text" name="search" placeholder="Search student..." value="{{ search_query }}">
+
+<button type="submit">Search</button>
+
+</form>
+
+<div>
+
+<a href="/add/" class="add-btn">Add Student</a>
+
+<a href="/logout/" class="logout-btn">Logout</a>
+
+</div>
+
+</div>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Age</th>
+<th>Course</th>
+<th>Actions</th>
+</tr>
+
+{% for student in page_obj %}
+
+<tr>
+
+<td>{{ student.id }}</td>
+
+<td>{{ student.name }}</td>
+
+<td>{{ student.age }}</td>
+
+<td>{{ student.course }}</td>
+
+<td>
+
+<a href="/update/{{student.id}}" class="Update-btn">Update</a>
+
+<a href="/delete/{{student.id}}" class="delete-btn">Delete</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="5" class="no-data">No students found</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<div class="pagination">
+
+{% if page_obj.has_previous %}
+
+<a href="?page=1">First</a>
+
+<a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+
+{% endif %}
+
+<span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+{% if page_obj.has_next %}
+
+<a href="?page={{ page_obj.next_page_number }}">Next</a>
+
+<a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</body>
+</html>
