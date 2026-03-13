@@ -25,3 +25,6 @@ How to Run Project:
 4. Start server
 
 python manage.py runserver
+For login use this 
+username - rahman
+password - rahman
